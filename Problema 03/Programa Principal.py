@@ -1357,7 +1357,9 @@ while on_menu == True:
                         # Vai salvar a manutenção em uma lista, para que ela
                         # seja escrita nas manutenções realizadas.
                         manutencao_para_realizar = lista_manutencoes_agendadas[linha_da_manutencao]
-                        Functions_P3.manipularCSV_ComLista(caminho_manutencoes_realizadas, 'append', 'utf8', manutencao_para_realizar)  
+                        Functions_P3.manipularCSV_ComLista(caminho_manutencoes_realizadas, 'append', 'utf8', manutencao_para_realizar)
+                        # Atualizando os dados da variável em memória.
+                        lista_manutencoes_realizadas = Functions_P3.manipularCSV_ComLista(caminho_manutencoes_realizadas, 'copy_to_list', 'utf8', '')
                         
                         # Vai calcular a data da nova manutenção.
                         # Primeiramente, vai formatar a data antiga em uma variável.
