@@ -67,16 +67,17 @@ elif TemArquivoManutencoesRealizadas == False:
                     'Nome da Peça', 'Tipo de Validade', 'Validade da Peça', 'Data de Conclusão da Manutenção - DD/MM/AAAA']
     Functions_P3.manipularCSV_ComLista(caminho_manutencoes_realizadas, 'write', 'utf8', EstruturaCSV)
 
-# Vai copiar os dados de todos os arquivos para listas,
-# para que eles possam ser manipulados.
-lista_clientes = Functions_P3.manipularCSV_ComLista(caminho_clientes, 'copy_to_list', 'utf8', '')
-lista_manutencoes_agendadas = Functions_P3.manipularCSV_ComLista(caminho_manutencoes_agendadas, 'copy_to_list', 'utf8', '')
-lista_manutencoes_realizadas = Functions_P3.manipularCSV_ComLista(caminho_manutencoes_realizadas, 'copy_to_list', 'utf8', '')
-
 # Bloco do programa principal:
 on_menu = True # Vai permitir a entrada no loop do menu principal.
                # "True" > Entrar | "False" > Sair
 while on_menu == True:
+    # Vai copiar todos dados dos arquivos "Clientes.csv", "Manutenções_Agendadas.csv" e "Manutenções_Realizadas.csv"
+    # para listas, fazendo com que eles possam ser manipulados.
+    # E, também, atualizá-los sempre que voltar ao topo deste loop.
+    lista_clientes = Functions_P3.manipularCSV_ComLista(caminho_clientes, 'copy_to_list', 'utf8', '')
+    lista_manutencoes_agendadas = Functions_P3.manipularCSV_ComLista(caminho_manutencoes_agendadas, 'copy_to_list', 'utf8', '')
+    lista_manutencoes_realizadas = Functions_P3.manipularCSV_ComLista(caminho_manutencoes_realizadas, 'copy_to_list', 'utf8', '')
+
     os.system('cls') # Vai limpar o terminal.
     try:
         start_menu_options = int(input("\nGerenciador de Manutenções\n"
@@ -884,6 +885,9 @@ while on_menu == True:
 
                         # Fase de registro das informações da lista no arquivo "Manutenções_Agendadas.csv".
                         Functions_P3.manipularCSV_ComLista(caminho_manutencoes_agendadas, 'append', 'utf8', nova_manutencao)
+
+                        # Atualizando os dados da variável em memória.
+                        lista_manutencoes_agendadas = Functions_P3.manipularCSV_ComLista(caminho_manutencoes_agendadas, 'copy_to_list', 'utf8', '')
 
                         # Voltando para o menu principal, após agendar a manutenção.
                         os.system('cls')
