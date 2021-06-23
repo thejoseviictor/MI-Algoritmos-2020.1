@@ -1354,6 +1354,9 @@ while on_menu == True:
                     # A data da nova manutenção automática tem como base a data de realização da manutenção
                     # com o incremento do prazo de validade da peça.
                     if manutencao_existe == True:
+                        # Vai definir a data de realização da manutenção.
+                        data_hoje = datetime.date.today()
+                        lista_manutencoes_agendadas[linha_da_manutencao][6] = f'{data_hoje.day}/{data_hoje.month}/{data_hoje.year}'
                         # Vai salvar a manutenção em uma lista, para que ela
                         # seja escrita nas manutenções realizadas.
                         manutencao_para_realizar = lista_manutencoes_agendadas[linha_da_manutencao]
@@ -1361,28 +1364,15 @@ while on_menu == True:
                         # Atualizando os dados da variável em memória.
                         lista_manutencoes_realizadas = Functions_P3.manipularCSV_ComLista(caminho_manutencoes_realizadas, 'copy_to_list', 'utf8', '')
                         
-                        # Vai calcular a data da nova manutenção.
-                        # Primeiramente, vai formatar a data antiga em uma variável.
-                        data_manutencao_antiga = manutencao_para_realizar[6]
-                        # Vai separar o dia, mês e ano.
-                        if data_manutencao_antiga[-8] == '/': # Vai verificar se a data tem zeros.
-                            dia_antiga = int(data_manutencao_antiga[-10:len(data_manutencao_antiga)-8])
-                            mes_antiga = int(data_manutencao_antiga[-7:len(data_manutencao_antiga)-5])
-                        else:
-                            dia_antiga = int(data_manutencao_antiga[-9:len(data_manutencao_antiga)-7])
-                            mes_antiga = int(data_manutencao_antiga[-6:len(data_manutencao_antiga)-5])
-                        ano_antiga = int(data_manutencao_antiga[-4:len(data_manutencao_antiga)])
-                        # Vai colocar a data antiga no formato do "datetime".
-                        data_manutencao_antiga = datetime.date(ano_antiga, mes_antiga, dia_antiga)
                         # Vai verificar o tipo do prazo de validade da peça.
                         if manutencao_para_realizar[4] == 'Dias':
                             incremento_dias = int(manutencao_para_realizar[5])
                         elif manutencao_para_realizar[4] == 'Meses':
                             incremento_dias = int(manutencao_para_realizar[5]) * 30
                         elif manutencao_para_realizar[4] == 'Anos':
-                            incremento_dias = int(manutencao_para_realizar[5]) * 375
+                            incremento_dias = int(manutencao_para_realizar[5]) * 365
                         # Vai incrementar a validade e criar a data da nova manutenção.
-                        nova_data = data_manutencao_antiga + datetime.timedelta(days=incremento_dias)
+                        nova_data = data_hoje + datetime.timedelta(days=incremento_dias)
                         manutencao_para_realizar[6] = f'{nova_data.day}/{nova_data.month}/{nova_data.year}'
                         
                         # Vai remover a manutenção do arquivo de manutenções agendadas
